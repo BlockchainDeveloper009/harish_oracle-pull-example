@@ -9,8 +9,9 @@ require('dotenv').config();
 
 
 async function main() {
-    const address = 'rpc-testnet-dora-2.supra.com';
-    const pairIndexes = [0, 21]; // Set the pair indexes as an array
+    
+    const address = 'https://rpc-testnet-dora-2.supra.com';
+    const pairIndexes = [89]; // Set the pair indexes as an array
     const chainType = 'evm'; // Set the chain type (evm, sui, aptos, radix)
     
     const client = new PullServiceClient(address);
@@ -24,16 +25,16 @@ async function main() {
     console.log("Requesting proof for price index : ", request.pair_indexes);
     const WALLET_ADDRESS = process.env.WALLET_ADDRESS ; //"0x1d4F7bac4eAa3Cc5513B7A539330b53AE94A858a";
     const PRIVATE_KEY = process.env.PRIVATE_KEY; //"859d1c39730867ff539b0d5223ee4801a8ead5640383fab058c3db29971385b8";
-    console.log(`WALLET_ADDRESS= ${WALLET_ADDRESS}`);
-    console.log(`PRIVATE_KEY= ${PRIVATE_KEY}`);
-
+  
     client.getProof(request)
         .then(response => {
             console.log('Proof received:', response);
             callContract(response)
         })
         .catch(error => {
-            console.error('Error:', error?.response?.data);
+            console.error('getProof-->Error:', error?.response?.data);
+            console.log(error)
+            console.log('****************')
         });
 }
 
@@ -45,6 +46,8 @@ async function callContract(response) {
 
     console.log(`PRIVATE_KEY= ${PRIVATE_KEY}`);
     const contractAddress =  process.env.CONTRACT_ADDRESS;  // Address of your smart contract
+    
+   try {
     
     const web3 = new Web3(new Web3.providers.HttpProvider(RPC_URL)); // Rpc url for desired chain
 
@@ -109,6 +112,12 @@ async function callContract(response) {
     // Send the signed transaction
     const receipt = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction,null,{checkRevertBeforeSending:false});
     console.log('Transaction receipt:', receipt);
+
+   } catch (error) {
+        console.log('try-catch');
+        console.log(error);
+        console.log('&&&&&&&&&&&&&&&&&&&&');
+   }
 }
 
 main();
