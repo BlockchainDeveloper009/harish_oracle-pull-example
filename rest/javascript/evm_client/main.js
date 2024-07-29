@@ -11,7 +11,9 @@ require('dotenv').config();
 async function main() {
     
     const address = 'https://rpc-testnet-dora-2.supra.com';
-    const pairIndexes = [89]; // Set the pair indexes as an array
+    //const pairIndexes = [89, 425, 426, 427, 432, 75 ]; // Set the pair indexes as an array
+    const pairIndexes = [75]; // Set the pair indexes as an array
+    const pairSymbols = ['USDC_USD, SAUCE_wHBAR, xSAUCE_wHBAR, HBARX_wHBAR, HBAR_USD, HBAR_USDT']; // Set the pair indexes as an array
     const chainType = 'evm'; // Set the chain type (evm, sui, aptos, radix)
     
     const client = new PullServiceClient(address);
@@ -23,6 +25,8 @@ async function main() {
     };
 
     console.log("Requesting proof for price index : ", request.pair_indexes);
+    console.log("Requesting proof for pairSymbols  : ", pairSymbols);
+    pairSymbols
     const WALLET_ADDRESS = process.env.WALLET_ADDRESS ; //"0x1d4F7bac4eAa3Cc5513B7A539330b53AE94A858a";
     const PRIVATE_KEY = process.env.PRIVATE_KEY; //"859d1c39730867ff539b0d5223ee4801a8ead5640383fab058c3db29971385b8";
   
@@ -44,7 +48,7 @@ async function callContract(response) {
     const WALLET_ADDRESS = process.env.WALLET_ADDRESS ; //"0x1d4F7bac4eAa3Cc5513B7A539330b53AE94A858a";
     const PRIVATE_KEY = process.env.PRIVATE_KEY; //"859d1c39730867ff539b0d5223ee4801a8ead5640383fab058c3db29971385b8";
 
-    console.log(`PRIVATE_KEY= ${PRIVATE_KEY}`);
+    
     const contractAddress =  process.env.CONTRACT_ADDRESS;  // Address of your smart contract
     
    try {

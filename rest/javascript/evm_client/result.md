@@ -1,3 +1,65 @@
+
+
+89 | 
+
+Pair index :  [ '89' ]
+Pair Price :  [ '100000000' ]        
+Pair Decimal :  [ '8' ]
+Pair Timestamp :  [ '1722283482100' ]
+
+425:SAUCE_wHBAR
+
+Pair index :  [ '425' ]
+Pair Price :  [ '811548029439790850' ]
+Pair Decimal :  [ '18' ]
+Pair Timestamp :  [ '1722275643228' ] 
+
+426: xSAUCE_wHBAR
+Pair index :  [ '426' ]
+Pair Price :  [ '932493611140730050' ]
+Pair Decimal :  [ '18' ]
+Pair Timestamp :  [ '1722275643228' ]
+
+
+427: HBARX_wHBAR
+
+Pair index :  [ '427' ]
+Pair Price :  [ '1284867861056999850' ]
+Pair Decimal :  [ '18' ]
+Pair Timestamp :  [ '1722275643228' ]
+
+432: HBAR_USD
+
+Pair index :  [ '432' ]
+Pair Price :  [ '67220000000000000' ]
+Pair Decimal :  [ '18' ]
+Pair Timestamp :  [ '1722283730049' ]
+
+75: HBAR_USDT
+
+Pair index :  [ '75' ]
+Pair Price :  [ '67202500000000000' ]
+Pair Decimal :  [ '18' ]
+Pair Timestamp :  [ '1722283791100' ]
+
+
+
+
+Sample:
+
+
+
+Call Trace:
+
+https://hashscan.io/testnet/transaction/1722283793.483282003
+
+![alt text](image.png)
+
+
+
+
+
+
 ```Pair index :  [ '89' ]
 Pair Price :  [ '100000000' ]
 Pair Decimal :  [ '8' ]
@@ -36,4 +98,5 @@ Transaction receipt: {
   status: 1n,
   type: 0n
 }
-PS C:\source\repos\harish_oracle-pull-example\rest\javascript\evm_client>```
+PS C:\source\repos\harish_oracle-pull-example\rest\javascript\evm_client>````
+
