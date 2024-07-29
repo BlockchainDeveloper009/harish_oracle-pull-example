@@ -1,18 +1,32 @@
 const PullServiceClient = require("./pullServiceClient");
 const {Web3} = require('web3');
 
+// Load environment variables from .env file
+require('dotenv').config();
+
+// Access the variables
+
+
+
 async function main() {
-    const address = '<REST API SERVER ADDRESS>'; // Set the rest server address
+    const address = 'rpc-testnet-dora-2.supra.com';
     const pairIndexes = [0, 21]; // Set the pair indexes as an array
     const chainType = 'evm'; // Set the chain type (evm, sui, aptos, radix)
-
+    
     const client = new PullServiceClient(address);
-
+    const apiKey = process.env.API_KEY;
+    
     const request = {
         pair_indexes: pairIndexes,
         chain_type: chainType
     };
+
     console.log("Requesting proof for price index : ", request.pair_indexes);
+    const WALLET_ADDRESS = process.env.WALLET_ADDRESS ; //"0x1d4F7bac4eAa3Cc5513B7A539330b53AE94A858a";
+    const PRIVATE_KEY = process.env.PRIVATE_KEY; //"859d1c39730867ff539b0d5223ee4801a8ead5640383fab058c3db29971385b8";
+    console.log(`WALLET_ADDRESS= ${WALLET_ADDRESS}`);
+    console.log(`PRIVATE_KEY= ${PRIVATE_KEY}`);
+
     client.getProof(request)
         .then(response => {
             console.log('Proof received:', response);
@@ -24,12 +38,19 @@ async function main() {
 }
 
 async function callContract(response) {
+    //https://testnet.hashio.io/api
+    const RPC_URL = 'https://testnet.hashio.io/api';
+    const WALLET_ADDRESS = process.env.WALLET_ADDRESS ; //"0x1d4F7bac4eAa3Cc5513B7A539330b53AE94A858a";
+    const PRIVATE_KEY = process.env.PRIVATE_KEY; //"859d1c39730867ff539b0d5223ee4801a8ead5640383fab058c3db29971385b8";
 
-    const web3 = new Web3(new Web3.providers.HttpProvider('<RPC URL>')); // Rpc url for desired chain
+    console.log(`PRIVATE_KEY= ${PRIVATE_KEY}`);
+    const contractAddress =  process.env.CONTRACT_ADDRESS;  // Address of your smart contract
+    
+    const web3 = new Web3(new Web3.providers.HttpProvider(RPC_URL)); // Rpc url for desired chain
 
     const contractAbi = require("../../resources/abi.json"); // Path of your smart contract ABI
 
-    const contractAddress = '<CONTRACT ADDRESS>'; // Address of your smart contract
+    
 
     const contract = new web3.eth.Contract(contractAbi, contractAddress);
 
@@ -66,25 +87,24 @@ async function callContract(response) {
     console.log("Pair Price : ", pairPrice);
     console.log("Pair Decimal : ", pairDecimal);
     console.log("Pair Timestamp : ", pairTimestamp);
-
-
+    
     /////////////////////////////////////////////////// End of the utility code to deserialise the oracle proof bytes (Optional) ////////////////////////////////////////////////////////////////
     let bytes = web3.utils.hexToBytes(hex);
     
     const txData = contract.methods.verifyOracleProof(bytes).encodeABI(); // function from you contract eg:GetPairPrice from example-contract.sol
-    const gasEstimate = await contract.methods.verifyOracleProof(bytes).estimateGas({from: "<WALLET ADDRESS>"});
+    const gasEstimate = await contract.methods.verifyOracleProof(bytes).estimateGas({from: WALLET_ADDRESS});
 
     // Create the transaction object
     const transactionObject = {
-        from: "<WALLET ADDRESS>",
+        from: "0x1d4F7bac4eAa3Cc5513B7A539330b53AE94A858a",
         to: contractAddress,
         data: txData,
         gas: gasEstimate,
         gasPrice: await web3.eth.getGasPrice() // Set your desired gas price here, e.g: web3.utils.toWei('1000', 'gwei')
     };
-
+    
     // Sign the transaction with the private key
-    const signedTransaction = await web3.eth.accounts.signTransaction(transactionObject, "<PRIVATE KEY>");
+    const signedTransaction = await web3.eth.accounts.signTransaction(transactionObject, PRIVATE_KEY);
 
     // Send the signed transaction
     const receipt = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction,null,{checkRevertBeforeSending:false});
