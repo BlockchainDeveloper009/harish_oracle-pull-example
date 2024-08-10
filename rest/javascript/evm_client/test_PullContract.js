@@ -1,6 +1,6 @@
 const PullServiceClient = require("./pullServiceClient");
 const {Web3} = require('web3');
-
+const { ethers } = require("ethers");
 // Load environment variables from .env file
 require('dotenv').config();
 
@@ -8,7 +8,7 @@ require('dotenv').config();
 
 
 
-async function test_SupraOracle() {
+async function test_PullContract() {
     
     const address = 'https://rpc-testnet-dora-2.supra.com';
     //const pairIndexes = [89, 425, 426, 427, 432, 75 ]; // Set the pair indexes as an array
@@ -17,7 +17,7 @@ async function test_SupraOracle() {
     const chainType = 'evm'; // Set the chain type (evm, sui, aptos, radix)
     
     const client = new PullServiceClient(address);
-    
+    const apiKey = process.env.API_KEY;
     
     const request = {
         pair_indexes: pairIndexes,
@@ -63,6 +63,10 @@ async function callContract(response) {
 
     const hex = response.proof_bytes;
 
+    
+    
+    
+
     /////////////////////////////////////////////////// Utility code to deserialise the oracle proof bytes (Optional) ///////////////////////////////////////////////////////////////////
 
     const OracleProofABI = require("../../resources/oracleProof.json"); // Interface for the Oracle Proof data
@@ -99,14 +103,14 @@ async function callContract(response) {
     let bytes = web3.utils.hexToBytes(hex);
     
     const txData = contract.methods.verifyOracleProof(bytes).encodeABI(); // function from you contract eg:GetPairPrice from example-contract.sol
-    ///const gasEstimate = await contract.methods.verifyOracleProof(bytes).estimateGas({from: WALLET_ADDRESS});
-
+    //const gasEstimate = await contract.methods.verifyOracleProof(bytes).estimateGas({from: WALLET_ADDRESS});
+    await contract.methods.verifyOracleProof(bytes)
     // Create the transaction object
     const transactionObject = {
         from: "0x1d4F7bac4eAa3Cc5513B7A539330b53AE94A858a",
         to: contractAddress,
         data: txData,
-        gas: 15000000,
+        gas: gasEstimate,
         gasPrice: await web3.eth.getGasPrice() // Set your desired gas price here, e.g: web3.utils.toWei('1000', 'gwei')
     };
     
@@ -124,4 +128,4 @@ async function callContract(response) {
    }
 }
 
-module.exports = test_SupraOracle();
+module.exports = test_PullContract();

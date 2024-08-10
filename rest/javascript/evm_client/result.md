@@ -118,3 +118,8 @@ Transaction receipt: {
 }
 PS C:\source\repos\harish_oracle-pull-example\rest\javascript\evm_client>````
 
+Pair index :  [ '432' ]
+Pair Price :  [ '61537000000000000' ]
+Pair Decimal :  [ '18' ]
+Pair Timestamp :  [ '1722575976063' ]
+

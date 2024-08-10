@@ -27,7 +27,7 @@ Before using the library, make sure to set up the configuration in the main.js f
 1. Set the rest api server address:
 
    ```js
-   const address = 'rpc-testnet-dora-2.supra.com';
+   const address = 'https://rpc-testnet-dora-2.supra.com';
    ```
 2. Set the pair indexes as an array:
 
@@ -45,6 +45,14 @@ Before using the library, make sure to set up the configuration in the main.js f
 
    ```js
    const web3 = new Web3(new Web3.providers.HttpProvider('<RPC URL>'));
+   ```
+
+5. Rename .env_example to .env and update below values.
+
+   ```
+   WALLET_ADDRESS = "0x";
+    PRIVATE_KEY = "";
+    CONTRACT_ADDRESS = '0x6bf7b21145Cbd7BB0b9916E6eB24EDA8A675D7C0';
    ```
 
 # Customization

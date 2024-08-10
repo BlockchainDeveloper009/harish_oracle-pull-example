@@ -67,33 +67,33 @@ async function callContract(response) {
 
     const OracleProofABI = require("../../resources/oracleProof.json"); // Interface for the Oracle Proof data
 
-    let proof_data = web3.eth.abi.decodeParameters(OracleProofABI,hex); // Deserialising the Oracle Proof data 
+    // let proof_data = web3.eth.abi.decodeParameters(OracleProofABI,hex); // Deserialising the Oracle Proof data 
 
-    let pairId = []  // list of all the pair ids requested
-    let pairPrice = []; // list of prices for the corresponding pair ids
-    let pairDecimal = []; // list of pair decimals for the corresponding pair ids
-    let pairTimestamp = []; // list of pair last updated timestamp for the corresponding pair ids
+    // let pairId = []  // list of all the pair ids requested
+    // let pairPrice = []; // list of prices for the corresponding pair ids
+    // let pairDecimal = []; // list of pair decimals for the corresponding pair ids
+    // let pairTimestamp = []; // list of pair last updated timestamp for the corresponding pair ids
 
-    for (let i = 0; i < proof_data[0].data.length; ++i) {
+    // for (let i = 0; i < proof_data[0].data.length; ++i) {
 
-        for (let j = 0; j<proof_data[0].data[i].committee_data.length; j++) {
+    //     for (let j = 0; j<proof_data[0].data[i].committee_data.length; j++) {
 
-        pairId.push(proof_data[0].data[i].committee_data[j].committee_feed.pair.toString(10)); // pushing the pair ids requested in the output vector
+    //     pairId.push(proof_data[0].data[i].committee_data[j].committee_feed.pair.toString(10)); // pushing the pair ids requested in the output vector
 
-        pairPrice.push(proof_data[0].data[i].committee_data[j].committee_feed.price.toString(10)); // pushing the pair price for the corresponding ids
+    //     pairPrice.push(proof_data[0].data[i].committee_data[j].committee_feed.price.toString(10)); // pushing the pair price for the corresponding ids
 
-        pairDecimal.push(proof_data[0].data[i].committee_data[j].committee_feed.decimals.toString(10)); // pushing the pair decimals for the corresponding ids requested
+    //     pairDecimal.push(proof_data[0].data[i].committee_data[j].committee_feed.decimals.toString(10)); // pushing the pair decimals for the corresponding ids requested
 
-        pairTimestamp.push(proof_data[0].data[i].committee_data[j].committee_feed.timestamp.toString(10)); // pushing the pair timestamp for the corresponding ids requested
+    //     pairTimestamp.push(proof_data[0].data[i].committee_data[j].committee_feed.timestamp.toString(10)); // pushing the pair timestamp for the corresponding ids requested
 
-        }
+    //     }
 
-    }
+    // }
 
-    console.log("Pair index : ", pairId);
-    console.log("Pair Price : ", pairPrice);
-    console.log("Pair Decimal : ", pairDecimal);
-    console.log("Pair Timestamp : ", pairTimestamp);
+    // console.log("Pair index : ", pairId);
+    // console.log("Pair Price : ", pairPrice);
+    // console.log("Pair Decimal : ", pairDecimal);
+    // console.log("Pair Timestamp : ", pairTimestamp);
     
     /////////////////////////////////////////////////// End of the utility code to deserialise the oracle proof bytes (Optional) ////////////////////////////////////////////////////////////////
     let bytes = web3.utils.hexToBytes(hex);
